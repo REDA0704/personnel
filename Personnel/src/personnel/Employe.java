@@ -1,6 +1,7 @@
 package personnel;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Employé d'une ligue hébergée par la M2L. Certains peuvent 
@@ -16,8 +17,11 @@ public class Employe implements Serializable, Comparable<Employe>
 	private String nom, prenom, password, mail;
 	private Ligue ligue;
 	private GestionPersonnel gestionPersonnel;
+	private LocalDate dateArrivee;
+	private LocalDate dateDepart;
+
 	
-	Employe(GestionPersonnel gestionPersonnel, Ligue ligue, String nom, String prenom, String mail, String password)
+	Employe(GestionPersonnel gestionPersonnel, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart)
 	{
 		this.gestionPersonnel = gestionPersonnel;
 		this.nom = nom;
@@ -25,6 +29,9 @@ public class Employe implements Serializable, Comparable<Employe>
 		this.password = password;
 		this.mail = mail;
 		this.ligue = ligue;
+		
+	    setDateArrivee(dateArrivee);
+	    setDateDepart(dateDepart);
 	}
 	
 	/**
@@ -143,6 +150,38 @@ public class Employe implements Serializable, Comparable<Employe>
 	{
 		return ligue;
 	}
+	
+	
+	public LocalDate getDateArrivee()
+	{
+	    return dateArrivee;
+	}
+	
+	public void setDateArrivee(LocalDate dateArrivee)
+	{
+	    if (dateDepart != null && dateArrivee.isAfter(dateDepart))
+	        throw new DateIncoherenteException(
+	            "La date d'arrivée ne peut pas être après la date de départ"
+	        );
+
+	    this.dateArrivee = dateArrivee;
+	}
+
+	
+	public LocalDate getDateDepart()
+	{
+	    return dateDepart;
+	}
+
+	public void setDateDepart(LocalDate dateDepart)
+	{
+	    if (dateArrivee != null && dateDepart.isBefore(dateArrivee))
+	        throw new DateIncoherenteException(
+	            "La date de départ ne peut pas être avant la date d'arrivée"
+	        );
+
+	    this.dateDepart = dateDepart;
+	}
 
 	/**
 	 * Supprime l'employé. Si celui-ci est un administrateur, le root
@@ -179,6 +218,17 @@ public class Employe implements Serializable, Comparable<Employe>
 			res += "super-utilisateur";
 		else
 			res += ligue.toString();
+		    res += " : arrivé le " + dateArrivee + ", départ le " + dateDepart;
 		return res + ")";
 	}
+	
+    public static class DateIncoherenteException extends RuntimeException
+    {
+        private static final long serialVersionUID = 1L;
+        
+        public DateIncoherenteException(String message)
+        {
+            super(message);
+        }
+    }
 }

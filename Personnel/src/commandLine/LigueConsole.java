@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import commandLineMenus.List;
 import commandLineMenus.Menu;
 import commandLineMenus.Option;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import personnel.*;
 
@@ -97,11 +99,37 @@ public class LigueConsole
 		return new Option("ajouter un employé", "a",
 				() -> 
 				{
-					ligue.addEmploye(getString("nom : "), 
-						getString("prenom : "), getString("mail : "), 
-						getString("password : "));
-				}
-		);
+		            try
+		            {
+		                String nom = getString("nom : ");
+		                String prenom = getString("prenom : ");
+		                String mail = getString("mail : ");
+		                String password = getString("password : ");
+
+		                LocalDate dateArrivee =
+		                    LocalDate.parse(getString("date d'arrivée (AAAA-MM-JJ) : "));
+		                LocalDate dateDepart =
+		                    LocalDate.parse(getString("date de départ (AAAA-MM-JJ) : "));
+
+		                ligue.addEmploye(
+		                    nom,
+		                    prenom,
+		                    mail,
+		                    password,
+		                    dateArrivee,
+		                    dateDepart
+		                );
+		            }
+		            catch (DateTimeParseException e)
+		            {
+		                System.err.println("Format de date invalide (AAAA-MM-JJ attendu)");
+		            }
+		            catch (Employe.DateIncoherenteException e)
+		            {
+		                System.err.println("Erreur : " + e.getMessage());
+		            }
+		        }
+		    );
 	}
 	
 	private Menu gererEmployes(Ligue ligue)

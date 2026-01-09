@@ -6,6 +6,9 @@ import commandLineMenus.ListOption;
 import commandLineMenus.Menu;
 import commandLineMenus.Option;
 import personnel.Employe;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import personnel.Employe.DateIncoherenteException;
 
 public class EmployeConsole 
 {
@@ -27,6 +30,7 @@ public class EmployeConsole
 			menu.add(changerPrenom(employe));
 			menu.add(changerMail(employe));
 			menu.add(changerPassword(employe));
+			menu.add(changerDateArrivee(employe));
 			menu.addBack("q");
 			return menu;
 	}
@@ -53,5 +57,25 @@ public class EmployeConsole
 		return new Option("Changer le password", "x", () -> {employe.setPassword(getString("Nouveau password : "));});
 	}
 	
-
+	private Option changerDateArrivee(final Employe employe)
+	{
+	    return new Option("Changer la date d'arrivée", "d",
+	        () -> {
+	            try
+	            {
+	                employe.setDateArrivee(
+	                    LocalDate.parse(getString("Date d'arrivée (YYYY-MM-DD) : "))
+	                );
+	            }
+	            catch (DateTimeParseException e)
+	            {
+	                System.out.println("Format de date invalide");
+	            }
+	            catch (DateIncoherenteException e)
+	            {
+	                System.out.println(e.getMessage());
+	            }
+	        }
+	    );
+	}
 }
