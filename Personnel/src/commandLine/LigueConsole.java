@@ -73,7 +73,7 @@ public class LigueConsole
 		Menu menu = new Menu("Editer " + ligue.getNom());
 		menu.add(afficher(ligue));
 		menu.add(gererEmployes(ligue));
-		//menu.add(changerAdministrateur(ligue));
+		menu.add(changerAdministrateur(ligue));
 		menu.add(changerNom(ligue));
 		menu.add(supprimer(ligue));
 		menu.addBack("q");
@@ -153,7 +153,22 @@ public class LigueConsole
 	
 	private List<Employe> changerAdministrateur(final Ligue ligue)
 	{
-		return null;
+	    return new List<>(
+	            "Changer l'administrateur",
+	            "c",
+	            () -> new ArrayList<>(ligue.getEmployes()),
+	            (index, employe) ->
+	            {
+	                try
+	                {
+	                    ligue.setAdministrateur(employe);
+	                }
+	                catch (DroitsInsuffisants e)
+	                {
+	                    System.err.println("Droits insuffisants pour définir cet administrateur");
+	                }
+	            }
+	        );
 	}		
 
 	private List<Employe> modifierEmploye(final Ligue ligue)
