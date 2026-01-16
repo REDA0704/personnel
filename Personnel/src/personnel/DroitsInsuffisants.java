@@ -7,5 +7,8 @@ package personnel;
 
 public class DroitsInsuffisants extends RuntimeException
 {
-	private static final long serialVersionUID = -7047171662944223002L;	
+	private static final long serialVersionUID = -7047171662944223002L;
+    public DroitsInsuffisants() {
+        super("Droits insuffisants pour effectuer cette opération.");
+    }
 }
