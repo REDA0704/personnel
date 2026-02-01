@@ -1,9 +1,14 @@
 package personnel;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.junit.jupiter.api.Test;
+
 import java.time.LocalDate;
 
 /**
@@ -21,10 +26,11 @@ public class GestionPersonnel implements Serializable
 	private static final long serialVersionUID = -105283113987886425L;
 	private static GestionPersonnel gestionPersonnel = null;
 	private SortedSet<Ligue> ligues;
-	private Employe root = new Employe(this, null, "root", "", "", "toor", LocalDate.MIN, LocalDate.MAX);
+	private Employe root;
 	public final static int SERIALIZATION = 1, JDBC = 2, 
 			TYPE_PASSERELLE = SERIALIZATION;  
-	private static Passerelle passerelle = TYPE_PASSERELLE == JDBC ? new jdbc.JDBC() : new serialisation.Serialization();	
+	private static Passerelle passerelle = TYPE_PASSERELLE == JDBC ? new jdbc.JDBC() : new serialisation.Serialization();
+	
 	
 	/**
 	 * Retourne l'unique instance de cette classe.
@@ -49,6 +55,12 @@ public class GestionPersonnel implements Serializable
 			throw new RuntimeException("Vous ne pouvez créer qu'une seuls instance de cet objet.");
 		ligues = new TreeSet<>();
 		gestionPersonnel = this;
+		
+		try {
+			root = new Employe(this, null, "root", "", "", "toor", LocalDate.MIN, LocalDate.MAX);
+		} catch (Employe.DateIncoherenteException e) {
+			throw new RuntimeException("Erreur lors de la création du root", e);
+		}
 	}
 	
 	public void sauvegarder() throws SauvegardeImpossible
@@ -95,10 +107,18 @@ public class GestionPersonnel implements Serializable
 		return ligue;
 	}
 
-	public void remove(Ligue ligue)
+	void remove(Ligue ligue)
 	{
 		ligues.remove(ligue);
 	}
+	
+    @Test
+    void removeLigue() throws SauvegardeImpossible {
+        Ligue ligue = gestionPersonnel.addLigue("Volleyball");
+        gestionPersonnel.remove(ligue); 
+        assertFalse(gestionPersonnel.getLigues().contains(ligue), "La ligue doit être supprimée");
+    }
+    
 	
 	int insert(Ligue ligue) throws SauvegardeImpossible
 	{

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import personnel.Employe.DateIncoherenteException;
+
 import java.time.LocalDate;
 
 /**
@@ -110,14 +113,14 @@ public class Ligue implements Serializable, Comparable<Ligue>
 	 * @return l'employé créé. 
 	 */
 
-	public Employe addEmploye(String nom, String prenom, String mail, String password, LocalDate dateDepart, LocalDate dateArrivee)
+	public Employe addEmploye(String nom, String prenom, String mail, String password, LocalDate dateDepart, LocalDate dateArrivee) throws DateIncoherenteException
 	{
 		Employe employe = new Employe(this.gestionPersonnel, this, nom, prenom, mail, password, dateDepart, dateArrivee);
 		employes.add(employe);
 		return employe;
 	}
 	
-	public void remove(Employe employe)
+	void remove(Employe employe)
 	{
 		employes.remove(employe);
 	}

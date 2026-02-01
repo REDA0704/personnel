@@ -21,7 +21,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	private LocalDate dateDepart;
 
 	
-	Employe(GestionPersonnel gestionPersonnel, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart)
+	Employe(GestionPersonnel gestionPersonnel, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws DateIncoherenteException
 	{
 		this.gestionPersonnel = gestionPersonnel;
 		this.nom = nom;
@@ -157,7 +157,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	    return dateArrivee;
 	}
 	
-	public void setDateArrivee(LocalDate dateArrivee)
+	public void setDateArrivee(LocalDate dateArrivee) throws DateIncoherenteException
 	{
 	    if (dateDepart != null && dateArrivee.isAfter(dateDepart))
 	        throw new DateIncoherenteException(
@@ -173,7 +173,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	    return dateDepart;
 	}
 
-	public void setDateDepart(LocalDate dateDepart)
+	public void setDateDepart(LocalDate dateDepart) throws DateIncoherenteException
 	{
 	    if (dateArrivee != null && dateDepart.isBefore(dateArrivee))
 	        throw new DateIncoherenteException(
@@ -222,7 +222,7 @@ public class Employe implements Serializable, Comparable<Employe>
 		return res + ")";
 	}
 	
-    public static class DateIncoherenteException extends RuntimeException
+    public static class DateIncoherenteException extends Exception
     {
         private static final long serialVersionUID = 1L;
         
