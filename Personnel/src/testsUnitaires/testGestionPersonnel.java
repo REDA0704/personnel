@@ -15,13 +15,20 @@ class testGestionPersonnel {
     @Test
     void changeAdmin() throws SauvegardeImpossible, DateIncoherenteException {
         Ligue ligue = gestionPersonnel.addLigue("Admins");
-        Employe e = ligue.addEmploye(
-                "Martin", "Paul", "p@p.fr", "pwd",
+        
+        Employe employe1 = ligue.addEmploye("Dupont", "Jean", "j@j.fr", "pwd1",
                 LocalDate.of(2023, 1, 1),
-                LocalDate.of(2024, 1, 1)
-        );
-        ligue.setAdministrateur(e);
-        assertEquals(e, ligue.getAdministrateur());
+                LocalDate.of(2024, 1, 1));
+        Employe employe2 = ligue.addEmploye("Martin", "Paul", "p@p.fr", "pwd2",
+                LocalDate.of(2023, 1, 1),
+                LocalDate.of(2024, 1, 1));
+
+        ligue.setAdministrateur(employe1);
+        assertEquals(employe1, ligue.getAdministrateur());
+        
+        ligue.setAdministrateur(employe2);
+        assertEquals(employe2, ligue.getAdministrateur()); // Vérifie le nouvel admin
+        assertNotEquals(employe1, ligue.getAdministrateur()); // Vérifie que ce n'est plus l'ancien
     }
     
     

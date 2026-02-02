@@ -151,6 +151,17 @@ public class Employe implements Serializable, Comparable<Employe>
 		return ligue;
 	}
 	
+	/**
+	 * Change la ligue de l'employé.
+	 * @param ligue la nouvelle ligue de l'employé. 
+	 */
+	
+	public void setLigue(Ligue ligue)
+	{
+		this.ligue = ligue;
+	}
+	
+	
 	
 	public LocalDate getDateArrivee()
 	{
