@@ -94,6 +94,26 @@ public class LigueConsole
 				);
 	}
 	
+	
+	private List<Employe> selectionnerEmploye(Ligue ligue)
+	{
+		return new List<Employe>("Sélectionner un employé", "r", 
+				() -> new ArrayList<>(ligue.getEmployes()),
+				(employe) -> menuEmploye(ligue, employe)
+				);
+	}
+	
+	
+	private Menu menuEmploye(Ligue ligue, Employe employe)
+	{
+		Menu menu = new Menu("Editer " + employe.getNom());
+		menu.add(employeConsole.editerEmploye(employe)); 
+	    menu.add(supprimerEmploye(ligue));
+		menu.addBack("q");
+		return menu;
+	}
+
+	
 	private Option ajouterEmploye(final Ligue ligue)
 	{
 		return new Option("ajouter un employé", "a",
@@ -137,8 +157,9 @@ public class LigueConsole
 		Menu menu = new Menu("Gérer les employés de " + ligue.getNom(), "e");
 		menu.add(afficherEmployes(ligue));
 		menu.add(ajouterEmploye(ligue));
-		menu.add(modifierEmploye(ligue));
-		menu.add(supprimerEmploye(ligue));
+		//menu.add(modifierEmploye(ligue));
+		//menu.add(supprimerEmploye(ligue));
+		menu.add(selectionnerEmploye(ligue));
 		menu.addBack("q");
 		return menu;
 	}
