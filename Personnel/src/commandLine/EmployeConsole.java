@@ -82,7 +82,7 @@ public class EmployeConsole
 	
 	private Option changerDateDepart(final Employe employe)
 	{
-	    return new Option("Changer la date de départ", "d",
+	    return new Option("Changer la date de départ", "f",
 	        () -> {
 	            try
 	            {
