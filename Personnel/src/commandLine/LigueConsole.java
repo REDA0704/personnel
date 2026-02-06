@@ -180,14 +180,8 @@ public class LigueConsole
 	            () -> new ArrayList<>(ligue.getEmployes()),
 	            (index, employe) ->
 	            {
-	                try
-	                {
-	                    ligue.setAdministrateur(employe);
-	                }
-	                catch (DroitsInsuffisants e)
-	                {
-	                    System.err.println("Droits insuffisants pour définir cet administrateur");
-	                }
+	                ligue.setAdministrateur(employe);
+	                System.err.println("Administrateur modifié");   
 	            }
 	        );
 	}		
