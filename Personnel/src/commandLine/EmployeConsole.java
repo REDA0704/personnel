@@ -31,6 +31,7 @@ public class EmployeConsole
 			menu.add(changerMail(employe));
 			menu.add(changerPassword(employe));
 			menu.add(changerDateArrivee(employe));
+			menu.add(changerDateDepart(employe));
 			menu.addBack("q");
 			return menu;
 	}
@@ -65,6 +66,28 @@ public class EmployeConsole
 	            {
 	                employe.setDateArrivee(
 	                    LocalDate.parse(getString("Date d'arrivée (YYYY-MM-DD) : "))
+	                );
+	            }
+	            catch (DateTimeParseException e)
+	            {
+	                System.out.println("Format de date invalide");
+	            }
+	            catch (DateIncoherenteException e)
+	            {
+	                System.out.println(e.getMessage());
+	            }
+	        }
+	    );
+	}
+	
+	private Option changerDateDepart(final Employe employe)
+	{
+	    return new Option("Changer la date de départ", "d",
+	        () -> {
+	            try
+	            {
+	                employe.setDateDepart(
+	                    LocalDate.parse(getString("Date de départ (YYYY-MM-DD) : "))
 	                );
 	            }
 	            catch (DateTimeParseException e)
