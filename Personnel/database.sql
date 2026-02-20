@@ -1,7 +1,5 @@
-/--Script de création de table --/
-
 CREATE TABLE LIGUE (
-    num_ligue INT PRIMARY KEY AUTO_INCREMENT,
+    num_ligue INT AUTO_INCREMENT PRIMARY KEY,
     nom varchar (100) NOT NULL
 );
 
@@ -15,6 +13,5 @@ CREATE TABLE EMPLOYE (
     date_depart DATE,
     num_ligue INT,
 
-    FOREIGN KEY (num_ligue)
-    REFERENCES LIGUE(num_ligue)
+    FOREIGN KEY (num_ligue) REFERENCES LIGUE(num_ligue)
 );
