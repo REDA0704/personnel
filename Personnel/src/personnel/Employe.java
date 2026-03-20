@@ -19,11 +19,13 @@ public class Employe implements Serializable, Comparable<Employe>
 	private GestionPersonnel gestionPersonnel;
 	private LocalDate dateArrivee;
 	private LocalDate dateDepart;
+	private int id;
 
 	
-	Employe(GestionPersonnel gestionPersonnel, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws DateIncoherenteException
+	Employe(GestionPersonnel gestionPersonnel, int id, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws DateIncoherenteException
 	{
 		this.gestionPersonnel = gestionPersonnel;
+		this.id= id	;	
 		this.nom = nom;
 		this.prenom = prenom;
 		this.password = password;
@@ -32,6 +34,12 @@ public class Employe implements Serializable, Comparable<Employe>
 		
 	    setDateArrivee(dateArrivee);
 	    setDateDepart(dateDepart);
+	}
+	
+	Employe(GestionPersonnel gestionPersonnel, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws SauvegardeImpossible, DateIncoherenteException
+	{
+		this(gestionPersonnel, -1, ligue, nom, prenom, mail, password, dateArrivee, dateDepart);
+		this.id = gestionPersonnel.insert(this); 
 	}
 	
 	/**
@@ -140,6 +148,10 @@ public class Employe implements Serializable, Comparable<Employe>
 	{
 		this.password= password;
 	}
+	
+    public String getPassword() {
+        return password;
+    }
 
 	/**
 	 * Retourne la ligue à laquelle l'employé est affecté.
@@ -193,6 +205,14 @@ public class Employe implements Serializable, Comparable<Employe>
 
 	    this.dateDepart = dateDepart;
 	}
+	
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 	/**
 	 * Supprime l'employé. Si celui-ci est un administrateur, le root

@@ -9,6 +9,8 @@ import java.util.TreeSet;
 
 import org.junit.jupiter.api.Test;
 
+import personnel.Employe.DateIncoherenteException;
+
 import java.time.LocalDate;
 
 /**
@@ -57,7 +59,7 @@ public class GestionPersonnel implements Serializable
 		gestionPersonnel = this;
 		
 		try {
-			root = new Employe(this, null, "root", "", "", "toor", LocalDate.MIN, LocalDate.MAX);
+			root = new Employe(this, -1, null, "root", "", "", "toor", LocalDate.MIN, LocalDate.MAX);
 		} catch (Employe.DateIncoherenteException e) {
 			throw new RuntimeException("Erreur lors de la création du root", e);
 		}
@@ -124,6 +126,20 @@ public class GestionPersonnel implements Serializable
 	{
 		return passerelle.insert(ligue);
 	}
+	
+	
+	int insert(Employe employe) throws SauvegardeImpossible
+	{
+		return passerelle.insert(employe);
+	}
+	
+	
+	public void addRoot(String nom, String password) throws SauvegardeImpossible, DateIncoherenteException 
+	{
+		Employe rootEmploye = new Employe(this, -1, null, nom, "", "", password, LocalDate.now(), LocalDate.now());
+	    this.root = rootEmploye;
+	}
+	
 
 	/**
 	 * Retourne le root (super-utilisateur).
