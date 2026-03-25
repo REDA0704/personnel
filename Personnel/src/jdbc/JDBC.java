@@ -37,6 +37,22 @@ public class JDBC implements Passerelle
 		GestionPersonnel gestionPersonnel = new GestionPersonnel();
 		try 
 		{
+			String requeteRoot = "SELECT * FROM employe WHERE num_ligue IS NULL LIMIT 1";
+	        Statement stmtRoot = connection.createStatement();
+	        ResultSet rsRoot = stmtRoot.executeQuery(requeteRoot);
+	        
+	        if (rsRoot.next()) {
+                gestionPersonnel.addRoot(
+                    rsRoot.getInt("num_employe"),
+                    rsRoot.getString("nom"),
+                    rsRoot.getString("prenom"),
+                    rsRoot.getString("mail"),
+                    rsRoot.getString("password"),
+                    rsRoot.getDate("date_arrivee").toLocalDate(),
+                    rsRoot.getDate("date_depart").toLocalDate()
+                );
+	        }
+
 			String requete = "select * from ligue";
 			Statement instruction = connection.createStatement();
 			ResultSet ligues = instruction.executeQuery(requete);

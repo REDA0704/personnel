@@ -140,6 +140,17 @@ public class GestionPersonnel implements Serializable
 	    this.root = rootEmploye;
 	}
 	
+	
+	public void addRoot(int id, String nom, String prenom, String mail, String password, 
+            LocalDate dateArrivee, LocalDate dateDepart) {
+		try {
+			root = new Employe(this, id, null, nom, prenom, mail, password, dateArrivee, dateDepart);
+		} 
+		catch (Employe.DateIncoherenteException e) {
+		throw new RuntimeException("Erreur lors de la création du root à partir de la BDD", e);
+		}
+	}
+	
 
 	/**
 	 * Retourne le root (super-utilisateur).
