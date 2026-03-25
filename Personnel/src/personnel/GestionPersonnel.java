@@ -59,8 +59,8 @@ public class GestionPersonnel implements Serializable
 		gestionPersonnel = this;
 		
 		try {
-			root = new Employe(this, -1, null, "root", "", "", "toor", LocalDate.MIN, LocalDate.MAX);
-		} catch (Employe.DateIncoherenteException e) {
+			addRoot("root", "toor");
+		} catch (Employe.DateIncoherenteException | SauvegardeImpossible e) {
 			throw new RuntimeException("Erreur lors de la création du root", e);
 		}
 	}
