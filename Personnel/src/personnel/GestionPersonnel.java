@@ -140,6 +140,12 @@ public class GestionPersonnel implements Serializable
 	}
 	
 	
+	public void update(Employe employe) throws SauvegardeImpossible
+	{
+		passerelle.update(employe);
+	}
+	
+	
 	public void addRoot(String nom, String password) throws SauvegardeImpossible, DateIncoherenteException 
 	{
 		Employe rootEmploye = new Employe(this, -1, null, nom, "", "", password, LocalDate.now(), LocalDate.now());

@@ -81,9 +81,10 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * @param nom le nouveau nom.
 	 */
 	
-	public void setNom(String nom)
+	public void setNom(String nom) throws SauvegardeImpossible
 	{
 		this.nom = nom;
+		gestionPersonnel.update(this);
 	}
 
 	/**
@@ -101,9 +102,10 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * @param prenom le nouveau prénom de l'employé. 
 	 */
 
-	public void setPrenom(String prenom)
+	public void setPrenom(String prenom) throws SauvegardeImpossible
 	{
 		this.prenom = prenom;
+		gestionPersonnel.update(this);
 	}
 
 	/**
@@ -121,9 +123,10 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * @param mail le nouveau mail de l'employé.
 	 */
 
-	public void setMail(String mail)
+	public void setMail(String mail) throws SauvegardeImpossible
 	{
 		this.mail = mail;
+		gestionPersonnel.update(this);
 	}
 
 	/**
@@ -144,9 +147,10 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * @param password le nouveau password de l'employé. 
 	 */
 	
-	public void setPassword(String password)
+	public void setPassword(String password) throws SauvegardeImpossible
 	{
 		this.password= password;
+		gestionPersonnel.update(this);
 	}
 	
     public String getPassword() {
@@ -168,9 +172,10 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * @param ligue la nouvelle ligue de l'employé. 
 	 */
 	
-	public void setLigue(Ligue ligue)
+	public void setLigue(Ligue ligue) throws SauvegardeImpossible
 	{
 		this.ligue = ligue;
+		gestionPersonnel.update(this);
 	}
 	
 	
@@ -180,7 +185,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	    return dateArrivee;
 	}
 	
-	public void setDateArrivee(LocalDate dateArrivee) throws DateIncoherenteException
+	public void setDateArrivee(LocalDate dateArrivee) throws DateIncoherenteException, SauvegardeImpossible
 	{
 	    if (dateDepart != null && dateArrivee.isAfter(dateDepart))
 	        throw new DateIncoherenteException(
@@ -188,6 +193,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	        );
 
 	    this.dateArrivee = dateArrivee;
+	    gestionPersonnel.update(this);
 	}
 
 	
@@ -196,7 +202,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	    return dateDepart;
 	}
 
-	public void setDateDepart(LocalDate dateDepart) throws DateIncoherenteException
+	public void setDateDepart(LocalDate dateDepart) throws DateIncoherenteException, SauvegardeImpossible
 	{
 	    if (dateArrivee != null && dateDepart.isBefore(dateArrivee))
 	        throw new DateIncoherenteException(
@@ -204,14 +210,16 @@ public class Employe implements Serializable, Comparable<Employe>
 	        );
 
 	    this.dateDepart = dateDepart;
+	    gestionPersonnel.update(this);
 	}
 	
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id) throws SauvegardeImpossible {
         this.id = id;
+        gestionPersonnel.update(this);
     }
 
 	/**
