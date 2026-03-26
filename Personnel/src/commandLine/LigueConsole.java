@@ -83,7 +83,11 @@ public class LigueConsole
 	private Option changerNom(final Ligue ligue)
 	{
 		return new Option("Renommer", "r", 
-				() -> {ligue.setNom(getString("Nouveau nom : "));});
+				() -> {try {
+					ligue.setNom(getString("Nouveau nom : "));
+				} catch (SauvegardeImpossible e) {
+					e.printStackTrace();
+				}});
 	}
 
 	private List<Ligue> selectionnerLigue()
@@ -168,7 +172,11 @@ public class LigueConsole
 	{
 		return new List<>("Supprimer un employé", "s", 
 				() -> new ArrayList<>(ligue.getEmployes()),
-				(index, element) -> {element.remove();}
+				(index, element) -> {try {
+					element.remove();
+				} catch (SauvegardeImpossible e) {
+					e.printStackTrace();
+				}}
 				);
 	}
 	
@@ -180,7 +188,11 @@ public class LigueConsole
 	            () -> new ArrayList<>(ligue.getEmployes()),
 	            (index, employe) ->
 	            {
-	                ligue.setAdministrateur(employe);
+	                try {
+						ligue.setAdministrateur(employe);
+					} catch (SauvegardeImpossible e) {
+						e.printStackTrace();
+					}
 	                System.err.println("Administrateur modifié");   
 	            }
 	        );
