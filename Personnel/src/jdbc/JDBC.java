@@ -37,6 +37,7 @@ public class JDBC implements Passerelle
 		GestionPersonnel gestionPersonnel = new GestionPersonnel();
 		try 
 		{
+			// Charger le ROOT
 			String requeteRoot = "SELECT * FROM employe WHERE num_ligue IS NULL LIMIT 1";
 	        Statement stmtRoot = connection.createStatement();
 	        ResultSet rsRoot = stmtRoot.executeQuery(requeteRoot);
@@ -53,15 +54,44 @@ public class JDBC implements Passerelle
                 );
 	        }
 
-			String requete = "select * from ligue";
+	        // Charger les ligues
+			String requete = "SELECT * FROM ligue";
 			Statement instruction = connection.createStatement();
 			ResultSet ligues = instruction.executeQuery(requete);
-			while (ligues.next())
-				gestionPersonnel.addLigue(ligues.getInt(1), ligues.getString(2));
+			
+			while (ligues.next()) {
+				int idLigue = ligues.getInt("num_ligue");
+	            String nomLigue = ligues.getString("nom");
+
+	            // Ajouter la ligue à gestionPersonnel
+	            Ligue ligue = gestionPersonnel.addLigue(idLigue, nomLigue);
+
+	            // Charger les employés de cette ligue
+	            String requeteEmp = "SELECT * FROM employe WHERE num_ligue = ?";
+	            PreparedStatement stmtEmp = connection.prepareStatement(requeteEmp);
+	            stmtEmp.setInt(1, idLigue);
+	            ResultSet rsEmp = stmtEmp.executeQuery();
+
+	            while (rsEmp.next()) {
+	                Employe emp = new Employe(
+	                        gestionPersonnel,
+	                        rsEmp.getInt("num_employe"),
+	                        ligue,
+	                        rsEmp.getString("nom"),
+	                        rsEmp.getString("prenom"),
+	                        rsEmp.getString("mail"),
+	                        rsEmp.getString("password"),
+	                        rsEmp.getDate("date_arrivee").toLocalDate(),
+	                        rsEmp.getDate("date_depart").toLocalDate()
+	                    );   
+	            }
+	        }
 		}
-		catch (SQLException e)
+		
+		catch (SQLException | SauvegardeImpossible | Employe.DateIncoherenteException e)
 		{
-			System.out.println(e);
+	        e.printStackTrace();
+	        throw new RuntimeException("Erreur lors du chargement de la base", e);
 		}
 		return gestionPersonnel;
 	}
