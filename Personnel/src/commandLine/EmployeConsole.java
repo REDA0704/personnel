@@ -9,6 +9,7 @@ import personnel.Employe;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import personnel.Employe.DateIncoherenteException;
+import personnel.SauvegardeImpossible;
 
 public class EmployeConsole 
 {
@@ -39,23 +40,39 @@ public class EmployeConsole
 	private Option changerNom(final Employe employe)
 	{
 		return new Option("Changer le nom", "n", 
-				() -> {employe.setNom(getString("Nouveau nom : "));}
+				() -> {try {
+					employe.setNom(getString("Nouveau nom : "));
+				} catch (SauvegardeImpossible e) {
+					e.printStackTrace();
+				}}
 			);
 	}
 	
 	private Option changerPrenom(final Employe employe)
 	{
-		return new Option("Changer le prénom", "p", () -> {employe.setPrenom(getString("Nouveau prénom : "));});
+		return new Option("Changer le prénom", "p", () -> {try {
+			employe.setPrenom(getString("Nouveau prénom : "));
+		} catch (SauvegardeImpossible e) {
+			e.printStackTrace();
+		}});
 	}
 	
 	private Option changerMail(final Employe employe)
 	{
-		return new Option("Changer le mail", "e", () -> {employe.setMail(getString("Nouveau mail : "));});
+		return new Option("Changer le mail", "e", () -> {try {
+			employe.setMail(getString("Nouveau mail : "));
+		} catch (SauvegardeImpossible e) {
+			e.printStackTrace();
+		}});
 	}
 	
 	private Option changerPassword(final Employe employe)
 	{
-		return new Option("Changer le password", "x", () -> {employe.setPassword(getString("Nouveau password : "));});
+		return new Option("Changer le password", "x", () -> {try {
+			employe.setPassword(getString("Nouveau password : "));
+		} catch (SauvegardeImpossible e) {
+			e.printStackTrace();
+		}});
 	}
 	
 	private Option changerDateArrivee(final Employe employe)
@@ -64,10 +81,10 @@ public class EmployeConsole
 	        () -> {
 	            try
 	            {
-	                employe.setDateArrivee(
-	                    LocalDate.parse(getString("Date d'arrivée (YYYY-MM-DD) : "))
-	                );
-	            }
+						employe.setDateArrivee(
+						    LocalDate.parse(getString("Date d'arrivée (YYYY-MM-DD) : "))
+						);
+				} 
 	            catch (DateTimeParseException e)
 	            {
 	                System.out.println("Format de date invalide");
@@ -75,7 +92,10 @@ public class EmployeConsole
 	            catch (DateIncoherenteException e)
 	            {
 	                System.out.println(e.getMessage());
-	            }
+	            } catch (SauvegardeImpossible e) {
+					e.printStackTrace();
+				}
+
 	        }
 	    );
 	}
@@ -97,7 +117,9 @@ public class EmployeConsole
 	            catch (DateIncoherenteException e)
 	            {
 	                System.out.println(e.getMessage());
-	            }
+	            } catch (SauvegardeImpossible e) {
+					e.printStackTrace();
+				}
 	        }
 	    );
 	}

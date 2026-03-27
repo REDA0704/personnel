@@ -151,7 +151,9 @@ public class LigueConsole
 		            catch (Employe.DateIncoherenteException e)
 		            {
 		                System.err.println("Erreur : " + e.getMessage());
-		            }
+		            } catch (SauvegardeImpossible e) {
+						e.printStackTrace();
+					}
 		        }
 		    );
 	}

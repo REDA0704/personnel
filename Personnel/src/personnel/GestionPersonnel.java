@@ -154,7 +154,7 @@ public class GestionPersonnel implements Serializable
 	
 	
 	public void addRoot(int id, String nom, String prenom, String mail, String password, 
-            LocalDate dateArrivee, LocalDate dateDepart) {
+            LocalDate dateArrivee, LocalDate dateDepart) throws SauvegardeImpossible {
 		try {
 			root = new Employe(this, id, null, nom, prenom, mail, password, dateArrivee, dateDepart);
 		} 

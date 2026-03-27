@@ -22,7 +22,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	private int id;
 
 	
-	Employe(GestionPersonnel gestionPersonnel, int id, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws DateIncoherenteException
+	public Employe(GestionPersonnel gestionPersonnel, int id, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws DateIncoherenteException, SauvegardeImpossible
 	{
 		this.gestionPersonnel = gestionPersonnel;
 		this.id= id	;	
