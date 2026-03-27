@@ -153,6 +153,11 @@ public class GestionPersonnel implements Serializable
 	    }
 	}
 	
+	public void delete(Ligue ligue) throws SauvegardeImpossible {
+	    passerelle.delete(ligue);
+	    ligues.remove(ligue);
+	}
+	
 	
 	public void addRoot(String nom, String password) throws SauvegardeImpossible, DateIncoherenteException 
 	{

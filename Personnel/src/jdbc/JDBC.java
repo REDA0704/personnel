@@ -239,4 +239,26 @@ public class JDBC implements Passerelle
 	        throw new SauvegardeImpossible(e);
 	    }
 	}
+	
+	
+	@Override
+	public void delete(Ligue ligue) throws SauvegardeImpossible {
+	    try {
+	        PreparedStatement deleteEmployes = connection.prepareStatement(
+	            "DELETE FROM employe WHERE num_ligue = ?"
+	        );
+	        deleteEmployes.setInt(1, ligue.getId());
+	        deleteEmployes.executeUpdate();
+
+	        PreparedStatement deleteLigue = connection.prepareStatement(
+	            "DELETE FROM ligue WHERE num_ligue = ?"
+	        );
+	        deleteLigue.setInt(1, ligue.getId());
+	        deleteLigue.executeUpdate();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new SauvegardeImpossible(e);
+	    }
+	}
 }
