@@ -147,7 +147,7 @@ public class JDBC implements Passerelle
 			instruction.setString(2, employe.getPrenom());
 			instruction.setString(3, employe.getMail());
 			instruction.setString(4, employe.getPassword());
-
+			instruction.setDate(5, java.sql.Date.valueOf(employe.getDateArrivee()));
 
 			// dateDepart peut être null
 			if (employe.getDateDepart() != null) {
