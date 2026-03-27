@@ -1,0 +1,96 @@
+Maquettes de l’interface graphique
+Objectif
+
+Créer une interface permettant de gérer :
+-les ligues
+-les employés
+-les administrateurs
+-le root
+
+
+1- Fenêtre de connexion
+
+Contenu :
+-Champ mail
+-Champ mot de passe
+-Bouton Se connecter
+
+Comportement :
+-Vérifie les identifiants dans la base
+-Si root → accès complet
+-Si employé → accès limité à sa ligue
+
+
+
+2- Fenêtre principale (Dashboard)
+Contenu :
+-Liste des ligues (tableau ou liste)
+Boutons :
+-Ajouter une ligue
+-Modifier une ligue
+-Supprimer une ligue
+-Bouton Se déconnecter
+Comportement :
+-Clique sur une ligue → ouvre la gestion des employés
+
+
+
+3- Fenêtre gestion des ligues
+Contenu :
+-Champ : Nom de la ligue
+Boutons :
+-Valider
+-Annuler
+Utilisation :
+-Réutilisée pour ajouter et modifier
+
+
+
+4- Fenêtre liste des employés
+Contenu : (Tableau des employés)
+-Nom
+-Prénom
+-Mail
+-Rôle
+Boutons :
+-Ajouter un employé 
+-Modifier
+-Supprimer
+-Définir administrateur
+
+
+
+5- Fenêtre gestion des employés
+Contenu :
+-Nom
+-Prénom
+-Mail
+-Mot de passe
+-Date arrivée
+-Date départ
+
+Boutons :
+-Valider
+-Annuler
+
+
+
+6- Gestion des administrateurs (Admin des ligues)
+Dans la liste des employés :
+-Bouton ou clic droit :
+👉 “Définir comme administrateur”
+Comportement :
+-Vérifie que l’employé appartient à la ligue
+-Met à jour l’admin
+
+
+
+7- Gestion du ROOT 👑
+Cas spécial :
+-Le root :
+-n’appartient à aucune ligue
+-a accès à tout
+Interface :
+-Peut voir toutes les ligues
+-Peut créer/supprimer/modifier tout
+-Peut créer le premier admin d’une ligue
