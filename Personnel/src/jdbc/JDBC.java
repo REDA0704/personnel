@@ -224,4 +224,19 @@ public class JDBC implements Passerelle
 			throw new SauvegardeImpossible(exception);
 		}		
 	}
+	
+	
+	@Override
+	public void delete(Employe employe) throws SauvegardeImpossible {
+	    try {
+	        PreparedStatement instruction = connection.prepareStatement(
+	            "DELETE FROM employe WHERE num_employe = ?"
+	        );
+	        instruction.setInt(1, employe.getId());
+	        instruction.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new SauvegardeImpossible(e);
+	    }
+	}
 }

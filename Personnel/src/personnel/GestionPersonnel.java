@@ -146,6 +146,14 @@ public class GestionPersonnel implements Serializable
 	}
 	
 	
+	public void delete(Employe employe) throws SauvegardeImpossible {
+	    passerelle.delete(employe);
+	    if (employe.getLigue() != null) {
+	        employe.getLigue().getEmployes().remove(employe);
+	    }
+	}
+	
+	
 	public void addRoot(String nom, String password) throws SauvegardeImpossible, DateIncoherenteException 
 	{
 		Employe rootEmploye = new Employe(this, -1, null, nom, "", "", password, LocalDate.now(), LocalDate.now());
