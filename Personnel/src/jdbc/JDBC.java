@@ -73,7 +73,7 @@ public class JDBC implements Passerelle
 	            ResultSet rsEmp = stmtEmp.executeQuery();
 
 	            while (rsEmp.next()) {
-	                Employe emp = new Employe(
+	                new Employe(
 	                        gestionPersonnel,
 	                        rsEmp.getInt("num_employe"),
 	                        ligue,
@@ -140,16 +140,23 @@ public class JDBC implements Passerelle
 	{
 		try 
 		{
-			PreparedStatement instruction = connection.prepareStatement("insert into employe (nom, prenom, mail, password, date_arrivee, date_depart, num_ligue) values(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-
+			PreparedStatement instruction;
+			instruction = connection.prepareStatement("insert into employe (nom, prenom, mail, password, date_arrivee, date_depart, num_ligue) values(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+	        
 			instruction.setString(1, employe.getNom());
 			instruction.setString(2, employe.getPrenom());
 			instruction.setString(3, employe.getMail());
 			instruction.setString(4, employe.getPassword());
-			instruction.setDate(5, Date.valueOf(employe.getDateArrivee()));
-			instruction.setDate(6, Date.valueOf(employe.getDateDepart()));
-	        
-			if (employe.getLigue() != null) {
+
+
+			// dateDepart peut être null
+			if (employe.getDateDepart() != null) {
+			    instruction.setDate(6, java.sql.Date.valueOf(employe.getDateDepart()));
+			} else {
+			    instruction.setNull(6, java.sql.Types.DATE);
+			}
+			
+	        if (employe.getLigue() != null) {
 	            instruction.setInt(7, employe.getLigue().getId());
 	        } else {
 	            instruction.setNull(7, java.sql.Types.INTEGER); // root

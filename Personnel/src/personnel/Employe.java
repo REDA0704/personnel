@@ -193,7 +193,10 @@ public class Employe implements Serializable, Comparable<Employe>
 	        );
 
 	    this.dateArrivee = dateArrivee;
-	    gestionPersonnel.update(this);
+
+		if (id != -1) {
+		    gestionPersonnel.update(this);
+		}
 	}
 
 	
