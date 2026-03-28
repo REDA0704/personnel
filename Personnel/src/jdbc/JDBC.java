@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import personnel.*;
 
@@ -73,17 +74,13 @@ public class JDBC implements Passerelle
 	            ResultSet rsEmp = stmtEmp.executeQuery();
 
 	            while (rsEmp.next()) {
-	                new Employe(
-	                        gestionPersonnel,
-	                        rsEmp.getInt("num_employe"),
-	                        ligue,
-	                        rsEmp.getString("nom"),
-	                        rsEmp.getString("prenom"),
-	                        rsEmp.getString("mail"),
-	                        rsEmp.getString("password"),
-	                        rsEmp.getDate("date_arrivee").toLocalDate(),
-	                        rsEmp.getDate("date_depart").toLocalDate()
-	                    );   
+		            String nomEmp = rsEmp.getString("nom");
+		            String prenomEmp = rsEmp.getString("prenom");
+		            String mailEmp = rsEmp.getString("mail");
+		            String passwordEmp = rsEmp.getString("password");
+		            LocalDate dateArr  = rsEmp.getDate("date_arrivee").toLocalDate();
+		            LocalDate dateDep = rsEmp.getDate("date_depart").toLocalDate();
+	                ligue.addEmploye(nomEmp, prenomEmp, mailEmp, passwordEmp, dateArr, dateDep);
 	            }
 	        }
 		}
