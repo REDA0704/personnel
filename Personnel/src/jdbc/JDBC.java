@@ -206,9 +206,12 @@ public class JDBC implements Passerelle
 	        instruction.setString(3, employe.getMail());
 	        instruction.setString(4, employe.getPassword());
 	        instruction.setDate(5, java.sql.Date.valueOf(employe.getDateArrivee()));
-	        instruction.setDate(6, java.sql.Date.valueOf(employe.getDateDepart()));
 
-	        // gestion ligue null (root)
+	        if (employe.getDateDepart() != null)
+	            instruction.setDate(6, java.sql.Date.valueOf(employe.getDateDepart()));
+	        else
+	            instruction.setNull(6, java.sql.Types.DATE);
+
 	        if (employe.getLigue() != null)
 	            instruction.setInt(7, employe.getLigue().getId());
 	        else
