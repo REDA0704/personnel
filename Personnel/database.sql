@@ -15,3 +15,11 @@ CREATE TABLE EMPLOYE (
 
     FOREIGN KEY (num_ligue) REFERENCES LIGUE(num_ligue)
 );
+
+CREATE TABLE ADMINISTRER (
+    num_ligue INT UNIQUE NOT NULL,
+    num_employe INT UNIQUE NOT NULL,
+    PRIMARY KEY (num_ligue, num_employe),
+    FOREIGN KEY (num_ligue) REFERENCES LIGUE(num_ligue),
+    FOREIGN KEY (num_employe) REFERENCES EMPLOYE(num_employe)
+);
