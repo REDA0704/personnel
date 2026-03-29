@@ -82,6 +82,24 @@ public class JDBC implements Passerelle
 		            LocalDate dateDep = rsEmp.getDate("date_depart").toLocalDate();
 	                ligue.addEmploye(nomEmp, prenomEmp, mailEmp, passwordEmp, dateArr, dateDep);
 	            }
+	            
+	            // Charger l'administrateur de la ligue
+	            String requeteAdmin = "SELECT num_employe FROM ADMINISTRER WHERE num_ligue = ?";
+	            PreparedStatement stmtAdmin = connection.prepareStatement(requeteAdmin);
+	            stmtAdmin.setInt(1, idLigue);
+	            ResultSet rsAdmin = stmtAdmin.executeQuery();
+
+	            if (rsAdmin.next()) {
+	                int idAdmin = rsAdmin.getInt("num_employe");
+
+	                // retrouver l'employé correspondant
+	                for (Employe emp : ligue.getEmployes()) {
+	                    if (emp.getId() == idAdmin) {
+	                        ligue.setAdministrateur(emp);
+	                        break;
+	                    }
+	                }
+	            }
 	        }
 		}
 		
