@@ -74,13 +74,14 @@ public class JDBC implements Passerelle
 	            ResultSet rsEmp = stmtEmp.executeQuery();
 
 	            while (rsEmp.next()) {
+	            	int numEmp = rsEmp.getInt("num_employe");
 		            String nomEmp = rsEmp.getString("nom");
 		            String prenomEmp = rsEmp.getString("prenom");
 		            String mailEmp = rsEmp.getString("mail");
 		            String passwordEmp = rsEmp.getString("password");
 		            LocalDate dateArr  = rsEmp.getDate("date_arrivee").toLocalDate();
 		            LocalDate dateDep = rsEmp.getDate("date_depart").toLocalDate();
-	                ligue.addEmploye(nomEmp, prenomEmp, mailEmp, passwordEmp, dateArr, dateDep);
+	                ligue.addEmploye(numEmp, nomEmp, prenomEmp, mailEmp, passwordEmp, dateArr, dateDep);
 	            }
 	            
 	            // Charger l'administrateur de la ligue

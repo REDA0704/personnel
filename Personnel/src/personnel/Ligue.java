@@ -133,6 +133,16 @@ public class Ligue implements Serializable, Comparable<Ligue>
 		return employe;
 	}
 	
+	
+	public Employe addEmploye(int id, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) 
+			throws DateIncoherenteException, SauvegardeImpossible
+			{
+				Employe employe = new Employe(this.gestionPersonnel, id, this, nom, prenom, mail, password, dateArrivee, dateDepart);
+			    employes.add(employe);
+			    return employe;
+			}
+	
+	
 	void remove(Employe employe)
 	{
 		employes.remove(employe);
