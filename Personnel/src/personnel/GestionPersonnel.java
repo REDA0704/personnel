@@ -113,14 +113,14 @@ public class GestionPersonnel implements Serializable
 	{
 		ligues.remove(ligue);
 	}
-	
+	/*
     @Test
     void removeLigue() throws SauvegardeImpossible {
         Ligue ligue = gestionPersonnel.addLigue("Volleyball");
         gestionPersonnel.remove(ligue); 
         assertFalse(gestionPersonnel.getLigues().contains(ligue), "La ligue doit être supprimée");
     }
-    
+    */
 	
 	int insert(Ligue ligue) throws SauvegardeImpossible
 	{
