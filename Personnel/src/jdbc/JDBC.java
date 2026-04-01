@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 import java.time.LocalDate;
 
 import personnel.*;
@@ -244,6 +243,30 @@ public class JDBC implements Passerelle
 		}		
 	}
 	
+	
+	@Override
+	public void updateAdministrateur(Ligue ligue) throws SauvegardeImpossible {
+	    try {
+	        //supprimer ancien admin
+	        PreparedStatement delete = connection.prepareStatement("DELETE FROM ADMINISTRER WHERE num_ligue = ?");
+	        delete.setInt(1, ligue.getId());
+	        delete.executeUpdate();
+
+	        //ajouter le nouveau
+            PreparedStatement insert = connection.prepareStatement("INSERT INTO ADMINISTRER (num_ligue, num_employe) VALUES (?, ?)");
+            insert.setInt(1, ligue.getId());
+            insert.setInt(2, ligue.getAdministrateur().getId());
+            
+            insert.executeUpdate();
+	        
+	    }
+		catch (SQLException e)
+		{
+	        e.printStackTrace();
+	        throw new SauvegardeImpossible(e);
+		}
+	}
+	        
 	
 	@Override
 	public void delete(Employe employe) throws SauvegardeImpossible {

@@ -8,6 +8,7 @@ public interface Passerelle
 	public int insert(Employe employe) throws SauvegardeImpossible;
 	public void update(Ligue ligue) throws SauvegardeImpossible;
 	public void update(Employe employe) throws SauvegardeImpossible;
+	public void updateAdministrateur(Ligue ligue) throws SauvegardeImpossible;
 	void delete(Employe employe) throws SauvegardeImpossible;
 	void delete(Ligue ligue) throws SauvegardeImpossible;
 }

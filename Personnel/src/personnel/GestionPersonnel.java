@@ -146,6 +146,11 @@ public class GestionPersonnel implements Serializable
 	}
 	
 	
+	public void updateAdministrateur(Ligue ligue) throws SauvegardeImpossible {
+	    passerelle.updateAdministrateur(ligue);
+	}
+	
+	
 	public void delete(Employe employe) throws SauvegardeImpossible {
 	    passerelle.delete(employe);
 	    if (employe.getLigue() != null) {
