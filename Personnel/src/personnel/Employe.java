@@ -22,7 +22,7 @@ public class Employe implements Serializable, Comparable<Employe>
 	private int id;
 
 	
-	public Employe(GestionPersonnel gestionPersonnel, int id, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws DateIncoherenteException, SauvegardeImpossible
+	Employe(GestionPersonnel gestionPersonnel, int id, Ligue ligue, String nom, String prenom, String mail, String password, LocalDate dateArrivee, LocalDate dateDepart) throws DateIncoherenteException, SauvegardeImpossible
 	{
 		this.gestionPersonnel = gestionPersonnel;
 		this.id= id	;	
@@ -240,6 +240,7 @@ public class Employe implements Serializable, Comparable<Employe>
 		}
 		else
 			throw new ImpossibleDeSupprimerRoot();
+		gestionPersonnel.delete(this);
 	}
 
 	@Override
