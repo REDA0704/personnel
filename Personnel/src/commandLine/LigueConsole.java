@@ -199,7 +199,7 @@ public class LigueConsole
 	            }
 	        );
 	}		
-
+/*
 	private List<Employe> modifierEmploye(final Ligue ligue)
 	{
 		return new List<>("Modifier un employé", "e", 
@@ -207,10 +207,14 @@ public class LigueConsole
 				employeConsole.editerEmploye()
 				);
 	}
-	
+	*/
 	private Option supprimer(Ligue ligue)
 	{
-		return new Option("Supprimer", "d", () -> {ligue.remove();});
+		return new Option("Supprimer", "d", () -> {try {
+			ligue.remove();
+		} catch (SauvegardeImpossible e) {
+			e.printStackTrace();
+		}});
 	}
 	
 }
