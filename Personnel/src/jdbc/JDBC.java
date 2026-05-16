@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import util.Password;
+import java.sql.Date;
 
 import personnel.*;
 
@@ -43,6 +45,9 @@ public class JDBC implements Passerelle
 	        ResultSet rsRoot = stmtRoot.executeQuery(requeteRoot);
 	        
 	        if (rsRoot.next()) {
+	        	java.sql.Date sqlDateDep = rsRoot.getDate("date_depart");
+                LocalDate dateDep = (sqlDateDep != null) ? sqlDateDep.toLocalDate() : null;
+                
                 gestionPersonnel.addRoot(
                     rsRoot.getInt("num_employe"),
                     rsRoot.getString("nom"),
@@ -50,7 +55,7 @@ public class JDBC implements Passerelle
                     rsRoot.getString("mail"),
                     rsRoot.getString("password"),
                     rsRoot.getDate("date_arrivee").toLocalDate(),
-                    rsRoot.getDate("date_depart").toLocalDate()
+                    dateDep
                 );
 	        }
 
@@ -161,7 +166,7 @@ public class JDBC implements Passerelle
 			instruction.setString(1, employe.getNom());
 			instruction.setString(2, employe.getPrenom());
 			instruction.setString(3, employe.getMail());
-			instruction.setString(4, employe.getPassword());
+			instruction.setString(4, Password.hash(employe.getPassword()));
 			instruction.setDate(5, java.sql.Date.valueOf(employe.getDateArrivee()));
 
 			// dateDepart peut être null
@@ -219,7 +224,7 @@ public class JDBC implements Passerelle
 			instruction.setString(1, employe.getNom());
 	        instruction.setString(2, employe.getPrenom());
 	        instruction.setString(3, employe.getMail());
-	        instruction.setString(4, employe.getPassword());
+	        instruction.setString(4, Password.hash(employe.getPassword()));
 	        instruction.setDate(5, java.sql.Date.valueOf(employe.getDateArrivee()));
 
 	        if (employe.getDateDepart() != null)
@@ -300,6 +305,44 @@ public class JDBC implements Passerelle
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
+	        throw new SauvegardeImpossible(e);
+	    }
+	}
+	
+	public boolean estVide() throws SQLException
+	{
+	    String sql = "SELECT COUNT(*) FROM employe";
+	    Statement stmt = connection.createStatement();
+	    ResultSet rs = stmt.executeQuery(sql);
+
+	    if (rs.next()) {
+	        return rs.getInt(1) == 0;
+	    }
+
+	    return true;
+	}
+	
+	public void creerRoot() throws SauvegardeImpossible
+	{
+	    try {
+	        PreparedStatement stmt = connection.prepareStatement(
+	            "INSERT INTO employe (nom, prenom, mail, password, date_arrivee, date_depart, num_ligue) VALUES (?, ?, ?, ?, ?, ?, ?)"
+	        );
+
+	        stmt.setString(1, "root");
+	        stmt.setString(2, "root");
+	        stmt.setString(3, "root@mail.com");
+
+	        // 🔥 MOT DE PASSE HASHÉ
+	        stmt.setString(4, Password.hash("toor"));
+
+	        stmt.setDate(5, java.sql.Date.valueOf("2000-01-01"));
+	        stmt.setNull(6, java.sql.Types.DATE);
+	        stmt.setNull(7, java.sql.Types.INTEGER);
+
+	        stmt.executeUpdate();
+
+	    } catch (SQLException e) {
 	        throw new SauvegardeImpossible(e);
 	    }
 	}

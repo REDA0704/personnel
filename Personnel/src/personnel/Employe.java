@@ -2,6 +2,7 @@ package personnel;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Employé d'une ligue hébergée par la M2L. Certains peuvent 
@@ -136,9 +137,9 @@ public class Employe implements Serializable, Comparable<Employe>
 	 * @param password le password auquel comparer celui de l'employé.
 	 */
 	
-	public boolean checkPassword(String password)
+	public boolean checkPassword(String passwordSaisi)
 	{
-		return this.password.equals(password);
+		return BCrypt.checkpw(passwordSaisi, this.password);
 	}
 
 	/**

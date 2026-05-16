@@ -3,6 +3,7 @@ package commandLine;
 import personnel.*;
 import commandLineMenus.*;
 import static commandLineMenus.rendering.examples.util.InOut.*;
+import jdbc.JDBC;
 
 public class PersonnelConsole
 {
@@ -73,6 +74,15 @@ public class PersonnelConsole
 	
 	public static void main(String[] args)
 	{
+	    JDBC jdbc = new JDBC();
+		
+	    try {
+	        if (jdbc.estVide()) {
+	            jdbc.creerRoot();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 		PersonnelConsole personnelConsole = 
 				new PersonnelConsole(GestionPersonnel.getGestionPersonnel());
 		if (personnelConsole.verifiePassword())
