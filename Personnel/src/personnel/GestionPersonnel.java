@@ -187,4 +187,34 @@ public class GestionPersonnel implements Serializable
 	{
 		return root;
 	}
+	
+	
+	/**
+	 * Recherche un employé par son adresse mail
+	 * @param mail l'adresse mail de l'employé
+	 * @return l'objet Employe s'il existe, null sinon
+	 */
+	
+	public Employe getEmployeParMail(String mail)
+	{
+	    // vérifier le root
+	    if (root != null && root.getMail().equals(mail))
+	    {
+	        return root;
+	    }
+
+	    // parcourir les ligues
+	    for (Ligue ligue : ligues)
+	    {
+	        for (Employe employe : ligue.getEmployes())
+	        {
+	            if (employe.getMail().equals(mail))
+	            {
+	                return employe;
+	            }
+	        }
+	    }
+
+	    return null;
+	}
 }
