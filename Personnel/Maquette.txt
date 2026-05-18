@@ -8,89 +8,94 @@ Créer une interface permettant de gérer :
 -le root
 
 
-1- Fenêtre de connexion
+1. Fenetre de connexionTitre: Connexion
+Contenu:
+Champ texte pour saisir l'email
+Champ mot de passe pour saisir le mot de passe
+Bouton: "Se connecter"
 
-Contenu :
--Champ mail
--Champ mot de passe
--Bouton Se connecter
+Comportement:
 
-Comportement :
--Vérifie les identifiants dans la base
--Si root → accès complet
--Si employé → accès limité à sa ligue
+Valide les identifiants dans la base de donnees
+Verifie le mot de passe avec BCrypt
+Si root (num_ligue = NULL) → connexion ROOT
+Si employe (num_ligue != NULL) → connexion ADMIN LIGUE
+Affiche le nom et prenom dans FenetrePrincipale apres connexion
+Si identifiants incorrects → message d'erreur
 
 
 
 2- Fenêtre principale (Dashboard)
 Contenu :
--Liste des ligues (tableau ou liste)
-Boutons :
--Ajouter une ligue
--Modifier une ligue
--Supprimer une ligue
--Bouton Se déconnecter
-Comportement :
--Clique sur une ligue → ouvre la gestion des employés
+Bouton 1: "Gerer le compte" avec description "Parametres et mot de passe"
+Bouton 2: "Gerer les ligues" avec description "Administrer vos ligues"
+
+Menu en haut:
+
+Menu "Gestion" avec options:
+"Gerer les ligues" → affiche PanelGestionLigues
+"Gerer les personnels" → affiche PanelGestionPersonnels
+"Gerer le compte" → affiche PanelCompte
+
+Menu "Fichier" avec options:
+"Se deconnecter" → retour LoginPanel
+"Quitter" → fermer l'application
 
 
 
 3- Fenêtre gestion des ligues
-Contenu :
--Champ : Nom de la ligue
-Boutons :
--Valider
--Annuler
-Utilisation :
--Réutilisée pour ajouter et modifier
+Contenu:
+
+Bouton: "Ajouter" (desactive pour ADMIN LIGUE et EMPLOYE)
+Bouton: "Retour"
+Liste des ligues avec scroll:
+
+Double click sur une ligue pour ouvrir un menu d'edition avec options:
+
+"Afficher" → affiche popup avec infos ligue
+"Gerer employes" → ouvre PanelGestionPersonnels
+"Changer administrateur" → ouvre popup selection employe
+"Changer nom" → ouvre popup saisie nom
+"Supprimer" → demande confirmation puis supprime
+"Retour" → ferme le menu
 
 
 
-4- Fenêtre liste des employés
-Contenu : (Tableau des employés)
--Nom
--Prénom
--Mail
--Rôle
-Boutons :
--Ajouter un employé 
--Modifier
--Supprimer
--Définir administrateur
+4- Fenetre gestion des employes
+Contenu:
+Bouton: "Ajouter" (active seulement pour ROOT et ADMIN LIGUE de la ligue)
+Bouton: "Retour"
+
+Double click pour ouvrir un menu d'edition avec options:
+
+"Afficher" → affiche popup avec infos employe
+"Changer nom" → popup saisie nom
+"Changer prenom" → popup saisie prenom
+"Changer email" → popup saisie email
+"Changer mot de passe" → popup ancien/nouveau mdp
+"Changer date arrivee" → popup saisie date (AAAA-MM-JJ)
+"Changer date depart" → popup saisie date (optionnel)
+"Supprimer" → demande confirmation puis supprime
+"Retour" → ferme le menu
 
 
 
-5- Fenêtre gestion des employés
-Contenu :
--Nom
--Prénom
--Mail
--Mot de passe
--Date arrivée
--Date départ
 
-Boutons :
--Valider
--Annuler
+5- Fenetre de gestion du compte
+Titre: "Gerer le compte"
+Contenu:
 
+Label: "Nom :"
+Champ texte nom (pre-rempli)
+Label: "Prenom :"
+Champ texte prenom (pre-rempli)
+Label: "Email :"
+Champ texte email (pre-rempli)
+Separateur visuel
+Label: "Ancien mot de passe :"
+Champ mot de passe (masque)
+Label: "Nouveau mot de passe :"
+Champ mot de passe (masque)
+Bouton: "Sauvegarder"
+Bouton: "Retour"
 
-
-6- Gestion des administrateurs (Admin des ligues)
-Dans la liste des employés :
--Bouton ou clic droit :
-👉 “Définir comme administrateur”
-Comportement :
--Vérifie que l’employé appartient à la ligue
--Met à jour l’admin
-
-
-
-7- Gestion du ROOT 👑
-Cas spécial :
--Le root :
--n’appartient à aucune ligue
--a accès à tout
-Interface :
--Peut voir toutes les ligues
--Peut créer/supprimer/modifier tout
--Peut créer le premier admin d’une ligue
