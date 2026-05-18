@@ -224,7 +224,7 @@ public class JDBC implements Passerelle
 			instruction.setString(1, employe.getNom());
 	        instruction.setString(2, employe.getPrenom());
 	        instruction.setString(3, employe.getMail());
-	        instruction.setString(4, Password.hash(employe.getPassword()));
+	        instruction.setString(4, employe.getPassword());
 	        instruction.setDate(5, java.sql.Date.valueOf(employe.getDateArrivee()));
 
 	        if (employe.getDateDepart() != null)
@@ -331,9 +331,8 @@ public class JDBC implements Passerelle
 
 	        stmt.setString(1, "root");
 	        stmt.setString(2, "root");
-	        stmt.setString(3, "root@mail.com");
+	        stmt.setString(3, "root");
 
-	        // 🔥 MOT DE PASSE HASHÉ
 	        stmt.setString(4, Password.hash("toor"));
 
 	        stmt.setDate(5, java.sql.Date.valueOf("2000-01-01"));

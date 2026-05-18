@@ -216,10 +216,6 @@ public class LoginPanel extends JPanel {
             return;
         }
         
-        if (!mail.contains("@")) {
-            afficherErreur("Email invalide");
-            return;
-        }
         
         // Chercher l'employé par mail dans GestionPersonnel
         Employe employe = gestionPersonnel.getEmployeParMail(mail);

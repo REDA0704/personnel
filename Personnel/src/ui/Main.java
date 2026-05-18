@@ -12,10 +12,16 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                // Initialiser GestionPersonnel
+                jdbc.JDBC jdbc = new jdbc.JDBC();
+                
+                // Créer le root s'il n'existe pas
+                if (jdbc.estVide()) {
+                    jdbc.creerRoot();
+                }
+                
+
                 GestionPersonnel gestionPersonnel = GestionPersonnel.getGestionPersonnel();
                 
-                // Créer et afficher la fenêtre de login
                 new FenetreLogin(gestionPersonnel);
                 
             } catch (Exception e) {
